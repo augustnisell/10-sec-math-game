@@ -1,4 +1,4 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="utf-8">
@@ -17,10 +17,14 @@
   </head>
   <body>
     <div id="gameFrame">
+      <div id="scoreBox">
+        <p>High Score: 0</p>
+        <p>Current Score: <span id="currentScore">0</span></p>
+      </div>
       <h3>10 seconds left</h3>
-      <h1>5 + 8 = ?</h1>
-      <form id="answerForm">
-        <input type="text" id="answer" placeholder="Type your answer here" autocomplete="off" />
+      <h1 id="question"></h1>
+      <form id="responseForm">
+        <input type="text" id="response" placeholder="Type your answer here" autocomplete="off" />
       </form>
     </div>
   </body>

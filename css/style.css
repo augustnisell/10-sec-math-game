@@ -1,3 +1,10 @@
 #gameFrame {
   text-align: center;
+  width: 30%;
+  margin: auto;
+}
+
+#scoreBox {
+  text-align: left;
+  margin-top: 40px;
 }
