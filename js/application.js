@@ -1,3 +1,5 @@
+// Update generateQuestion() for different operators
+
 var highScore = 0;
 var currentScore = 0;
 var timeLeft = null;
@@ -7,6 +9,7 @@ var startRound = function () {
 	$('#response').val('');
 	currentScore = 0;
 	$('#currentScore').text(0);
+
 	answer = generateQuestion();
 	timerAction('startTimer');
 	$('#response').focus();
@@ -28,13 +31,59 @@ var startRound = function () {
   });
 }
 
+var specifyOperator = function () {
+	var allOperators = ['add', 'subtract', 'multiply', 'divide'];
+	var usedOperators =[];
+	for (var i = 0; i < allOperators.length; i++) {
+		if ($('#' + allOperators[i]).is(':checked')) {
+			usedOperators.push(allOperators[i]);
+		}
+	}
+
+	return usedOperators[Math.floor(Math.random() * usedOperators.length)];
+}
+
 var generateQuestion = function () {
-	var var1 = Math.ceil(Math.random() * 10);
-	var var2 = Math.ceil(Math.random() * 10);
+	var add = function (var1, var2) {
+		$('#question').text(var1 + ' + ' + var2 + ' = ?');
+			return var1 + var2;
+	}
+	var subtract = function (var1, var2) {
+		if (var2 > var1) {
+			var1, var2 = var2, var1;
+		}
+		$('#question').text(var1 + ' - ' + var2 + ' = ?');
+		return var1 - var2;
+	}
+	var multiply = function (var1, var2) {
+		$('#question').text(var1 + ' x ' + var2 + ' = ?');
+		return var1 * var2;
+	}
+	var divide = function (var1, var2) {
+		var1 = var1 * var2;
+		$('#question').text(var1 + ' / ' + var2 + ' = ?');
+		return var1 / var2;
+	}
 
-	$('#question').text(var1 + ' + ' + var2 + ' = ?');
+	var x = Math.ceil(Math.random() * 10);
+	var y = Math.ceil(Math.random() * 10);
 
-	return var1 + var2;
+	var fnstring = specifyOperator();
+
+	switch (fnstring) {
+		case "add":
+			return add(x, y);
+			break;
+		case "subtract":
+			return subtract(x, y);
+			break;
+		case "multiply":
+			return multiply(x, y);
+			break;
+		case "divide":
+			return divide(x, y);
+			break;
+	}
 }
 
 var checkAnswer = function(playerResponse, correctAnswer) {
@@ -55,7 +104,7 @@ var timerAction = function (action) {
     	if (timeLeft <= 0) {
     		stopTimer();
     		$('#questionBox').toggleClass('hidden');
-    		$('#startButton').toggleClass('hidden');
+    		$('#startMenu').toggleClass('hidden');
     	}
   	}, 20);
 	}
@@ -79,7 +128,7 @@ $(document).ready(function () {
 
 	$(document).on('click', '#startButton', function(event) {
 		$('#questionBox').toggleClass('hidden');
-		$('#startButton').toggleClass('hidden');
+		$('#startMenu').toggleClass('hidden');
 		startRound();
 	});
 });
